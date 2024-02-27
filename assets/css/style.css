@@ -1,0 +1,16 @@
+h1 {
+  text-align: center;
+}
+
+#gridZone {
+  display: grid;
+  /* grid-template-columns: repeat(8, 20px); */
+  width: fit-content;
+  margin: auto;
+}
+.cell {
+  width: 20px;
+  height: 20px;
+  border: 1px solid lightgray;
+  background-color: #d2dae2;
+}
