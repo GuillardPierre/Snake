@@ -14,3 +14,7 @@ h1 {
   border: 1px solid lightgray;
   background-color: #d2dae2;
 }
+
+.snake {
+  background-color: rgb(19, 116, 19);
+}
