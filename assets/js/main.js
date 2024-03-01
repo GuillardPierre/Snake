@@ -47,8 +47,12 @@ const app = {
   },
 
   handleDirection: (e) => {
+    const impossibleDir = [["ArrowUp","ArrowDown"], ["ArrowUp", "ArrowDown"]]
     if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
       if (e.key === app.snakeDirection) {
+        return;
+      } else if (e.key === "ArrowUp" && app.snakeDirection === "ArrowDown" || e.key === "ArrowDown" && app.snakeDirection === "ArrowUp"
+      || e.key === "ArrowLeft" && app.snakeDirection === "ArrowRight" || e.key === "ArrowRight" && app.snakeDirection === "ArrowLeft") {
         return;
       }
       e.preventDefault();
@@ -219,6 +223,7 @@ const app = {
   },
 
   didYouLose: () => {
+    console.log(app.position[0]);
     const cleanPosition = `${app.position[0]}${app.position[1]}`;
     if (
       document
