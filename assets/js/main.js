@@ -5,14 +5,16 @@ const app = {
   // Stocke si un timer est déjà en cours (pour pouvoir l'annuler)
   timerId: null,
   //  Rapidité du mouvement du serpent
-  delayMovement: 200,
+  delayMovement: 150,
   // Permet de bloquer l'appui de pleins de touches en même temps
   directionLocked: false,
   // Stocke le score mais aussi la longueur du serpent
-  score: 4,
+  snakeLength: 4,
+  score: 0,
   allCells: null,
   position: ['N', 13],
   lastPosition: null,
+  fruitLocalisation: null,
 
   createGrid: (GridSize = 26, PixelsSize = 15) => {
     for (let i = 0; i < GridSize * GridSize; i++) {
@@ -70,16 +72,22 @@ const app = {
   snakePosition: (position) => {
     app.allCells = document.querySelectorAll('.cell');
     app.allCells.forEach((element) => {
-      if (element.classList.contains('snake')) {
-        element.classList.remove('snake');
+      if (element.classList.contains('snakeHead')) {
+        element.classList.remove('snakeHead');
       } else if (element.id === `${position}`) {
         element.classList.add('snake');
+        element.classList.add('snakeHead');
       }
     });
   },
 
+  handleScore: () => {
+    const zoneScore = document.querySelector('#scoreZone');
+    zoneScore.innerHTML = `Ton score : ${app.score} `;
+  },
+
   initiateSnakeBody: () => {
-    for (let i = app.score; i > 0; i--) {
+    for (let i = app.snakeLength; i > 0; i--) {
       app.allCells.forEach((e) => {
         if (e.id === `N${13 - i}`) {
           e.classList.add(`snakeBody`);
@@ -88,6 +96,16 @@ const app = {
       });
     }
   },
+
+  allVerification: () => {
+    app.snakePosition(`${app.position[0]}${app.position[1]}`);
+    app.snakeBodyMovement(app.lastPosition);
+    app.isTheFruitHere();
+    app.EatTheFruit();
+    app.handleScore();
+    app.didYouLose();
+  },
+
   snakeAllMovement: (direction) => {
     // permet d'annuler un mouvement déjà en cours
     if (app.timerId) {
@@ -98,24 +116,14 @@ const app = {
         app.timerId = setInterval(() => {
           app.lastPosition = `${app.position[0]}${app.position[1]}`;
           app.position[1]++;
-          app.snakePosition(`${app.position[0]}${app.position[1]}`);
-          app.snakeBodyMovement(app.lastPosition);
-          app.isTheFruitHere();
-          if (app.position[1] > 26) {
-            alert("C'est perdu");
-          }
+          app.allVerification();
         }, app.delayMovement);
         break;
       case 'ArrowLeft':
         app.timerId = setInterval(() => {
           app.lastPosition = `${app.position[0]}${app.position[1]}`;
           app.position[1]--;
-          app.snakePosition(`${app.position[0]}${app.position[1]}`);
-          app.snakeBodyMovement(app.lastPosition);
-          app.isTheFruitHere();
-          if (app.position[1] < 1) {
-            alert("C'est perdu");
-          }
+          app.allVerification();
         }, app.delayMovement);
 
         break;
@@ -123,12 +131,7 @@ const app = {
         app.timerId = setInterval(() => {
           app.lastPosition = `${app.position[0]}${app.position[1]}`;
           app.position[0] = app.changeLetter('more');
-          app.snakePosition(`${app.position[0]}${app.position[1]}`);
-          app.snakeBodyMovement(app.lastPosition);
-          app.isTheFruitHere();
-          if (app.position[0] === 'A' && app.changeLetter('more') === 'B') {
-            alert("C'est perdu");
-          }
+          app.allVerification();
         }, app.delayMovement);
 
         break;
@@ -136,12 +139,7 @@ const app = {
         app.timerId = setInterval(() => {
           app.lastPosition = `${app.position[0]}${app.position[1]}`;
           app.position[0] = app.changeLetter('less');
-          app.snakePosition(`${app.position[0]}${app.position[1]}`);
-          app.snakeBodyMovement(app.lastPosition);
-          app.isTheFruitHere();
-          if (app.position[0] === 'Z' && app.changeLetter('less') === 'Y') {
-            alert("C'est perdu");
-          }
+          app.allVerification();
         }, app.delayMovement);
 
         break;
@@ -151,14 +149,14 @@ const app = {
   snakeBodyMovement: (lastPosition) => {
     // On commence par enlever le bout du serpent
     app.allCells.forEach((e) => {
-      if (e.classList.contains(`S${app.score}`)) {
+      if (e.classList.contains(`S${app.snakeLength}`)) {
         e.classList.remove('snakeBody');
-        e.classList.remove(`S${app.score}`);
+        e.classList.remove(`S${app.snakeLength}`);
       }
     });
 
     // Chaque partie du serpent (sauf le bout) prend +1 en classe
-    for (let i = app.score - 1; i > 0; i--) {
+    for (let i = app.snakeLength - 1; i > 0; i--) {
       app.allCells.forEach((e) => {
         if (e.classList.contains(`S${i}`)) {
           e.classList.remove(`S${i}`);
@@ -187,31 +185,63 @@ const app = {
   },
 
   isTheFruitHere: () => {
-    console.log('lancé');
     let alreadyHere = false;
     app.allCells.forEach((e) => {
       if (e.classList.contains('fruit')) {
         alreadyHere = true;
-        console.log('fruit is here');
       }
     });
     if (alreadyHere === false) {
-      console.log('fruit is not here');
       app.generateFruit();
     }
   },
 
   generateFruit: () => {
-    console.log('génération fruit en cours');
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     let rdmLetter = app.getRandomInt(characters.length);
     rdmLetter = characters[rdmLetter];
     const rdmNumber = app.getRandomInt(26);
-    fruitLocalisation = `${rdmLetter}${rdmNumber}`;
-    document.querySelector(`#${fruitLocalisation}`).classList.add('fruit');
+    app.fruitLocalisation = `${rdmLetter}${rdmNumber}`;
+
+    document.querySelector(`#${app.fruitLocalisation}`).classList.add('fruit');
   },
 
   getRandomInt: (max) => Math.floor(Math.random() * (max - 1 + 1)) + 1,
+
+  EatTheFruit: () => {
+    if (`${app.position[0]}${app.position[1]}` === app.fruitLocalisation) {
+      document
+        .querySelector(`#${app.fruitLocalisation}`)
+        .classList.remove('fruit');
+      app.snakeLength++;
+      app.score++;
+    }
+  },
+
+  didYouLose: () => {
+    const cleanPosition = `${app.position[0]}${app.position[1]}`;
+    if (
+      document
+        .querySelector(`#${cleanPosition}`)
+        .classList.contains('snakeBody')
+    ) {
+      alert("C'est perdu");
+    }
+    // if (app.position[0] === 'B' && app.changeLetter('less') === 'A') {
+    //   console.log('cas A');
+    //   alert("C'est perdu");
+    // }
+    if (app.position[0] === 'A' && app.changeLetter('more') === 'B') {
+      console.log('cas B');
+      alert("C'est perdu");
+    }
+    if (app.position[1] > 26) {
+      alert("C'est perdu");
+    }
+    if (app.position[1] < 1) {
+      alert("C'est perdu");
+    }
+  },
 };
 
 app.createGrid();
@@ -219,6 +249,3 @@ app.snakePosition(`${app.position[0]}${app.position[1]}`);
 app.handleKeyDown();
 app.initiateSnakeBody();
 app.pausedGame();
-
-// for (let index = 0; index < app.score; index--) {}
-app.allCells.forEach((elem) => {});
