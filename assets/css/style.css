@@ -18,3 +18,11 @@ h1 {
 .snake {
   background-color: rgb(19, 116, 19);
 }
+
+.snakeBody {
+  background-color: rgb(16, 196, 16);
+}
+
+.fruit {
+  background-color: lightcoral;
+}
