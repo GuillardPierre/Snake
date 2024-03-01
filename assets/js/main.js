@@ -227,11 +227,11 @@ const app = {
     ) {
       alert("C'est perdu");
     }
-    // if (app.position[0] === 'B' && app.changeLetter('less') === 'A') {
-    //   console.log('cas A');
-    //   alert("C'est perdu");
-    // }
-    if (app.position[0] === 'A' && app.changeLetter('more') === 'B') {
+     if (app.position[0] === 'Z' && app.lastPosition[0] === 'A') {
+      console.log('cas A');
+       alert("C'est perdu");
+     }
+    if (app.position[0] === 'A' && app.lastPosition[0] === "Z") {
       console.log('cas B');
       alert("C'est perdu");
     }
