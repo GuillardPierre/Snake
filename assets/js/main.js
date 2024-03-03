@@ -218,6 +218,7 @@ const app = {
 			if (e.classList.contains(`S${app.snakeLength}`)) {
 				e.classList.remove('snakeBody');
 				e.classList.remove(`S${app.snakeLength}`);
+				e.classList.remove('snake');
 			}
 		});
 
@@ -277,8 +278,19 @@ const app = {
 		rdmLetter = characters[rdmLetter];
 		const rdmNumber = app.getRandomInt(26);
 		app.fruitLocalisation = `${rdmLetter}${rdmNumber}`;
-
-		document.querySelector(`#${app.fruitLocalisation}`).classList.add('fruit');
+		if (
+			document
+				.querySelector(`#${app.fruitLocalisation}`)
+				.classList.contains('snake')
+		) {
+			// Si la case contient déjà la classe 'snake', générer une nouvelle position pour la fruit
+			generateFruit();
+		} else {
+			// Sinon, ajouter la classe 'fruit' à la case
+			document
+				.querySelector(`#${app.fruitLocalisation}`)
+				.classList.add('fruit');
+		}
 	},
 
 	/**
