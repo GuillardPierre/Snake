@@ -14,6 +14,7 @@ body {
 	margin: 0;
 	display: flex;
 	flex-direction: column;
+	justify-content: space-between;
 }
 
 header {
@@ -86,4 +87,53 @@ h1 {
 	box-shadow: none;
 	cursor: pointer;
 	box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+}
+
+.mobileCommands {
+	display: grid;
+	grid-template-rows: repeat(2, 120px);
+	grid-template-columns: repeat(3, 130px);
+	gap: 1px;
+	justify-content: center;
+	display: none;
+}
+
+.touche {
+	width: 100px;
+	height: 90px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #00a6ed;
+	color: #fff;
+	font-size: 18px;
+	padding: 10px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.ArrowUp {
+	grid-row: 1;
+	grid-column: 2;
+}
+
+.ArrowLeft {
+	grid-row: 2;
+	grid-column: 1;
+}
+
+.ArrowRight {
+	grid-row: 2;
+	grid-column: 3;
+}
+
+.ArrowDown {
+	grid-row: 2;
+	grid-column: 2;
+}
+
+@media (width < 700px) {
+	.mobileCommands {
+		display: grid;
+	}
 }

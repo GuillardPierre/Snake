@@ -76,7 +76,6 @@ const app = {
 			}
 			e.preventDefault();
 			app.snakeDirection = e.key;
-			console.log(app.snakeDirection);
 			app.snakeAllMovement(app.snakeDirection);
 		}
 	},
@@ -84,6 +83,7 @@ const app = {
 	GameOver: () => {
 		app.scoreDisplayZone.innerHTML = app.score;
 		app.popUp.style.display = 'inline';
+		app.snakeDirection = null;
 		clearInterval(app.timerId);
 		window.removeEventListener('keydown', app.handleDirection);
 	},
@@ -343,6 +343,50 @@ const app = {
 		app.handleKeyDown();
 		app.pausedGame();
 		app.restart();
+		app.handleMobileTouches();
+	},
+
+	// ------------------------------------Mobile -----------------------------------------------------------
+	touches: document.querySelectorAll('.touche'),
+
+	handleMobileTouches: () => {
+		app.touches.forEach((e) => {
+			e.addEventListener('click', app.mobileDirection);
+		});
+	},
+
+	mobileDirection: (e) => {
+		if (!app.directionLocked) {
+			app.directionLocked = true; // Verrouillez la direction
+			setTimeout(() => {
+				app.directionLocked = false;
+			}, app.delayMovement - 50);
+		} else {
+			return;
+		}
+		if (
+			['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(
+				e.target.classList[1]
+			)
+		) {
+			if (e.key === app.snakeDirection) {
+				return;
+			} else if (
+				(e.target.classList[1] === 'ArrowUp' &&
+					app.snakeDirection === 'ArrowDown') ||
+				(e.target.classList[1] === 'ArrowDown' &&
+					app.snakeDirection === 'ArrowUp') ||
+				(e.target.classList[1] === 'ArrowLeft' &&
+					app.snakeDirection === 'ArrowRight') ||
+				(e.target.classList[1] === 'ArrowRight' &&
+					app.snakeDirection === 'ArrowLeft')
+			) {
+				return;
+			}
+			e.preventDefault();
+			app.snakeDirection = e.target.classList[1];
+			app.snakeAllMovement(app.snakeDirection);
+		}
 	},
 };
 
