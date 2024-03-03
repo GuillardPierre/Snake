@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="author" content="Pierre Guillard" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <title>Snake 🐍</title>
-  </head>
-  <body>
-    <header>
-      <h1>SNAKE</h1>
-    </header>
-    <body>
-      <section id="scoreZone">Ton score :</section>
-      <section id="gridZone"></section>
-      <section id="popUp">
-        <h2>Game over</h2>
-        <p>Ton score est de <span aria-label="score final"></span></p>
-        <button id="btnRejouer">Rejouer ? </button>
-      </section>
-
-    </body>
-    <script src="./assets/js/main.js"></script>
-  </body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="author" content="Pierre Guillard" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="./assets/css/style.css" />
+		<title>Snake 🐍</title>
+	</head>
+	<body>
+		<header>
+			<h1>SNAKE</h1>
+		</header>
+		<body>
+			<section id="scoreZone">Ton score : 0</section>
+			<section id="gridZone"></section>
+			<section id="popUp">
+				<h2>Game over</h2>
+				<p>
+					Ton score est de <span id="score" aria-label="score final">20</span>
+				</p>
+				<button id="btnRejouer">Rejouer ?</button>
+			</section>
+		</body>
+		<script src="./assets/js/main.js"></script>
+	</body>
 </html>

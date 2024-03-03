@@ -1,68 +1,89 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Madimi+One&display=swap');
 
 html {
-  margin: 0;
-  padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 body {
-  background-color: rgb(19, 116, 19);
-  font-family: 'Madimi One', sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  height: 100vh;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
+	background-color: rgb(19, 116, 19);
+	font-family: 'Madimi One', sans-serif;
+	font-weight: 400;
+	font-style: normal;
+	height: 100vh;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
 }
 
 header {
-  background-color: rgb(5, 87, 5);
+	background-color: rgb(5, 87, 5);
 }
 
 h1 {
-  text-align: center;
+	text-align: center;
 }
 
 #scoreZone {
-  margin-top: 25px;
-  text-align: center;
+	margin-top: 25px;
+	text-align: center;
 }
 
 #gridZone {
-  display: grid;
-  height: auto;
-  width: fit-content;
-  margin: auto;
+	display: grid;
+	height: auto;
+	width: fit-content;
+	margin: auto;
 }
 .cell {
-  width: 20px;
-  height: 20px;
-  /* border: 1px solid lightgray; */
-  background-color: #d2dae2;
+	width: 20px;
+	height: 20px;
+	/* border: 1px solid lightgray; */
+	background-color: #d2dae2;
 }
 
 .snakeHead {
-  background-color: rgb(19, 116, 19);
+	background-color: rgb(19, 116, 19);
 }
 
 .snakeBody {
-  background-color: rgb(16, 196, 16);
-  /* border: 1px solid lightblue; */
+	background-color: rgb(16, 196, 16);
+	/* border: 1px solid lightblue; */
 }
 
 .fruit {
-  background-color: lightcoral;
+	background-color: lightcoral;
 }
 
 #popUp {
-  position: absolute;
-  top : 50%;
-  left : 50% ;
-  width: fit-content;
-  height: fit-content;
-  padding: 15px;
-  background-color: lightblue;
-  border : 1px solid black; 
-  border-radius : 10px;
+	position: absolute;
+	top: 50%;
+	left: calc(50% - 75px);
+	width: fit-content;
+	height: fit-content;
+	padding: 15px;
+	background-color: lightblue;
+	border: 1px solid black;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+	display: none;
+}
+
+#popUp button {
+	border-radius: 5px;
+	border: 1px solid;
+	padding: 5px;
+	/* box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset; */
+	transition: box-shadow 0.3s;
+}
+
+#popUp button:hover {
+	box-shadow: none;
+	cursor: pointer;
+	box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
 }
