@@ -54,3 +54,15 @@ h1 {
 .fruit {
   background-color: lightcoral;
 }
+
+#popUp {
+  position: absolute;
+  top : 50%;
+  left : 50% ;
+  width: fit-content;
+  height: fit-content;
+  padding: 15px;
+  background-color: lightblue;
+  border : 1px solid black; 
+  border-radius : 10px;
+}
